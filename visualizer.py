@@ -11,9 +11,7 @@ mpl.use('TkAgg')
 
 import matplotlib.pyplot as plt
 from sklearn import model_selection
-from sklearn.metrics import classification_report
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
@@ -118,6 +116,7 @@ models.append(('SVM', SVC()))
 results = []
 names = []
 
+# Compare different models for the dataset
 if args.compare_models:
     print("\nAlgorithm:\tAverage\t\t(Standard Deviation)")
     print("----------\t-------\t\t--------------------")
@@ -130,7 +129,7 @@ if args.compare_models:
         msg = "%s:\t\t%f\t(%f)" % (name, cv_results.mean(), cv_results.std())
         print(msg)
 
-    # Compare Algorithms
+    # Compare Algorithms by plotting a graph
     fig = plt.figure()
     fig.suptitle('Algorithm Comparison')
     ax = fig.add_subplot(111)
@@ -138,8 +137,9 @@ if args.compare_models:
     ax.set_xticklabels(names)
     plt.show()
 
+
+# Make predictions on validation dataset using SVM
 if args.predict:
-    # Make predictions on validation dataset
     svc = SVC()
     svc.fit(X_train, Y_train)
     predictions = svc.predict(X_validation)
